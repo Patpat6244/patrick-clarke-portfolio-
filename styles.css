@@ -108,16 +108,6 @@ body {
   transform: rotate(1.2deg);
 }
 .btn-ghost:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px) rotate(1.2deg); }
-.btn-pill {
-  background: rgba(255,255,255,0.06);
-  color: var(--fg);
-  border-color: var(--border);
-  padding: 0.7rem 1.4rem;
-  font-size: 0.9rem;
-  border-radius: 0;
-  transform: rotate(-1deg);
-}
-.btn-pill:hover { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); transform: translateY(-2px) rotate(-1deg); }
 
 /* ---------- Header ---------- */
 .site-header {
@@ -133,7 +123,10 @@ body {
    nav links/logo themselves. */
 .site-header-bg {
   position: absolute;
-  inset: -26px -6px;
+  top: -26px;
+  right: -6px;
+  bottom: 22px;
+  left: -6px;
   z-index: 0;
   background: rgba(10,10,10,0.8);
   backdrop-filter: blur(12px);
@@ -162,11 +155,13 @@ body {
   text-decoration: none;
   color: var(--fg);
   letter-spacing: -0.02em;
+  transform: translateY(-8px);
 }
 .logo span { color: var(--accent); }
 .main-nav {
   display: flex;
   gap: var(--space-5);
+  transform: translateY(-15px);
 }
 .main-nav a {
   text-decoration: none;
@@ -177,7 +172,12 @@ body {
 }
 .main-nav a:hover { color: var(--fg); }
 .header-actions { display: flex; align-items: center; gap: var(--space-3); }
-.header-actions .btn-pill { display: inline-flex; }
+/* Smaller box than the standard .btn-primary — same font-size, just tighter
+   padding and no enforced min-height, so it reads as a compact header CTA. */
+.header-actions .btn {
+  padding: 0.5rem 1.1rem;
+  min-height: 0;
+}
 
 .menu-toggle {
   display: none;
@@ -244,7 +244,7 @@ body {
   inset: -16% -10%;
   z-index: -1;
   background: var(--bg);
-  transform: translateY(var(--parallax-y, 0px)) perspective(3600px) rotateX(4deg) rotateY(-7deg);
+  transform: perspective(3600px) rotateX(4deg) rotateY(-7deg);
   transform-origin: center;
 }
 @media (prefers-reduced-motion: reduce) {
@@ -269,7 +269,7 @@ body {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(0deg, rgba(10,10,10,0.96) 0%, rgba(10,10,10,0.55) 45%, rgba(10,10,10,0.35) 100%),
+    linear-gradient(0deg, rgba(10,10,10,0.97) 0%, rgba(10,10,10,0.9) 50%, rgba(10,10,10,0.6) 75%, rgba(10,10,10,0.35) 100%),
     linear-gradient(90deg, rgba(10,10,10,0.5) 0%, rgba(10,10,10,0.1) 30%, rgba(10,10,10,0.1) 70%, rgba(10,10,10,0.5) 100%);
 }
 .hero-noise {
@@ -293,14 +293,10 @@ body {
   margin: 0 auto;
   width: 100%;
   padding: 0 var(--space-4) var(--space-7);
-  transform: translateY(var(--parallax-content-y, 0px));
-  transform-origin: center bottom;
-}
-@media (prefers-reduced-motion: reduce) {
-  .hero-content { transform: none; }
 }
 .hero-heading {
-  transform: translateY(var(--heading-parallax-y, 0px)) perspective(1000px) rotateY(20deg);
+  margin-top: -5px;
+  transform: perspective(1000px) rotateY(20deg);
   transform-origin: left center;
 }
 @media (prefers-reduced-motion: reduce) {
@@ -334,15 +330,15 @@ body {
   margin-top: -0.22em;
 }
 .hero-tagline {
-  margin-top: var(--space-4);
-  max-width: 640px;
+  margin-top: 6px;
+  max-width: 600px;
   font-size: clamp(1.05rem, 2vw, 1.4rem);
-  line-height: 1.5;
+  line-height: 1.15;
   color: var(--fg);
 }
 .hero-tagline-inner {
   display: block;
-  transform: translateY(var(--tagline-parallax-y, 0px)) perspective(1000px) rotateY(-20deg);
+  transform: perspective(1000px) rotateY(-20deg);
   transform-origin: left center;
 }
 @media (prefers-reduced-motion: reduce) {
@@ -354,6 +350,7 @@ body {
   display: flex;
   gap: var(--space-3);
   flex-wrap: wrap;
+  transform: translateX(5px);
 }
 
 /* ---------- Fixed bug mascot ---------- */
@@ -421,7 +418,11 @@ body {
 }
 .bug-mascot svg, .bug-mascot img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .bug-mascot img { object-fit: contain; transition: filter 250ms var(--ease); }
-.bug-mascot .bug-icon-splat { display: none; }
+/* Splat is scaled up to 3x+ its box on squish (see splat-pop below) — without
+   this it visually spills over neighboring content and, because pointer
+   events follow the post-transform paint area, silently blocks clicks on
+   whatever it overlaps (e.g. a project bar scrolled underneath it). */
+.bug-mascot .bug-icon-splat { display: none; pointer-events: none; }
 .bug-mascot.squished .bug-icon-walk { display: none; }
 .bug-mascot.squished .bug-icon-splat { display: block; }
 /* Applied via JS a frame after .squished (see script.js) — starting a CSS
@@ -468,12 +469,20 @@ body {
 /* ---------- Credibility strip ---------- */
 .credibility {
   position: relative;
-  background: var(--bg-elevated);
+  z-index: 5;
+  overflow: hidden;
+  /* Pulled up to sit closer to the hero's buttons — deliberately overlapping
+     the tail end of the hero video, which is fine since z-index puts this
+     bar in front of it. Vertical padding here is clearance for the tilted
+     card's corners (see .credibility-card), not visual spacing — without it
+     the rotation's raised/lowered corners get clipped by this overflow. */
+  margin-top: clamp(-100px, calc(-6vw - 10px), -66px);
+  padding: clamp(20px, 2.2vw, 32px) 0;
 }
 /* Shared section-boundary divider — a soft purple line replacing plain gray
-   borders, used consistently everywhere sections meet. */
-.credibility::before,
-.about::before,
+   borders, used consistently everywhere sections meet. Credibility's own
+   top/bottom lines live on .credibility-card instead (see below), since that
+   whole bar — borders included — tilts together as one rigid unit. */
 .work::before,
 .contact::before {
   content: "";
@@ -485,6 +494,33 @@ body {
   transform: translateX(-50%);
   background: linear-gradient(90deg, transparent, rgba(167,139,250,0.45) 50%, transparent);
   pointer-events: none;
+}
+/* The "industry" bar (stat + scrolling logos) is treated as a single rigid
+   card — top border, content, and bottom border all tilt together — rather
+   than tilting the text independently of its edges. Slightly oversized and
+   held inside .credibility's overflow:hidden so the rotation never reveals
+   a gap at the viewport edges. */
+.credibility-card {
+  position: relative;
+  width: 104vw;
+  margin-left: -2vw;
+  background: var(--bg-elevated);
+  transform: rotate(-1deg);
+}
+.credibility-card::before,
+.credibility-card::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(167,139,250,0.45) 50%, transparent);
+  pointer-events: none;
+}
+.credibility-card::before { top: 0; }
+.credibility-card::after { bottom: 0; }
+@media (prefers-reduced-motion: reduce) {
+  .credibility-card { transform: none; }
 }
 .credibility-inner {
   position: relative;
@@ -592,7 +628,7 @@ body {
   font-family: var(--font-display);
   font-weight: 800;
   font-size: clamp(2.2rem, 5.5vw, 4rem);
-  line-height: 1.02;
+  line-height: 0.92;
   letter-spacing: -0.02em;
   text-transform: uppercase;
 }
@@ -613,7 +649,11 @@ body {
   overflow: hidden;
   margin-top: var(--space-6);
   margin-bottom: 0;
-  padding: clamp(24px, 3vw, 44px) 0;
+  /* Extra top clearance so the first bar's 3D tilt (rotateX/rotateY on
+     .project-strip) doesn't get clipped by this container's overflow:hidden —
+     later bars overlap into that same space, but they have something behind
+     them there; the first bar doesn't, so its clipped edge is visible. */
+  padding: clamp(72px, 7vw, 110px) 0 clamp(24px, 3vw, 44px);
 }
 /* Shown only when JavaScript is disabled (script.js never runs to inject the
    real project strips) — a plain, readable list so crawlers and no-JS
@@ -833,14 +873,14 @@ body {
   font-family: var(--font-display);
   font-weight: 700;
   font-size: clamp(1.5rem, 3.2vw, 2.4rem);
-  line-height: 1.25;
+  line-height: 1.05;
   letter-spacing: -0.01em;
   margin-top: var(--space-2);
 }
 .about-body {
   margin-top: var(--space-4);
   font-size: 1.1rem;
-  line-height: 1.7;
+  line-height: 1.2;
   color: var(--muted);
   max-width: 720px;
 }
@@ -857,7 +897,7 @@ body {
   display: inline-flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 5px;
+  gap: 0;
   margin-top: var(--space-4);
   text-decoration: none;
   word-break: break-word;
@@ -889,10 +929,21 @@ body {
 .contact-email-domain {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(1.458rem, 4.455vw, 2.43rem);
+  /* Scaled down so this line renders the same width as just "patpat" (the
+     second half of clarkepatpat) — since both lines are right-aligned,
+     matching that width is what makes "@gmail.com" line up under "patpat"
+     rather than the full name above it. */
+  font-size: clamp(0.744rem, 2.273vw, 1.53rem);
+  line-height: 1;
   color: var(--muted);
   letter-spacing: 0.02em;
   transition: color 250ms var(--ease);
+}
+.contact-email-at {
+  display: inline-block;
+  font-size: 2em;
+  line-height: 1;
+  vertical-align: middle;
 }
 .contact-email:hover .contact-email-domain,
 .contact-email:focus-visible .contact-email-domain {
@@ -994,6 +1045,15 @@ body {
   -ms-overflow-style: none;
 }
 .lightbox-content::-webkit-scrollbar { display: none; }
+/* Solo pieces (e.g. the showreel) have no related clips or credits — drop
+   the sidebar column entirely and let the video breathe at a larger size
+   instead of splitting a layout meant for two columns. */
+.lightbox-content--solo {
+  width: min(1180px, 94%);
+  grid-template-columns: 1fr;
+}
+.lightbox-content--solo .lightbox-sidebar { display: none; }
+.lightbox-content--solo .lightbox-main { width: 100%; max-width: 900px; margin: 0 auto; }
 .lightbox-main {
   display: flex;
   flex-direction: column;
@@ -1047,7 +1107,7 @@ body {
 .lightbox-desc {
   color: var(--fg);
   font-size: 1rem;
-  line-height: 1.7;
+  line-height: 1.2;
   max-width: 680px;
   transform: perspective(1600px) rotateX(-2.5deg) rotateY(4deg);
   transform-origin: left center;
@@ -1391,7 +1451,7 @@ body {
 
 @media (max-width: 768px) {
   .main-nav { display: none; }
-  .header-actions .btn-pill { display: none; }
+  .header-actions .btn { display: none; }
   .menu-toggle { display: flex; }
   .hero-content { padding-bottom: var(--space-5); }
   .form-row { grid-template-columns: 1fr; }

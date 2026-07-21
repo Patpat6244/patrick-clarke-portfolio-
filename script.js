@@ -19,7 +19,7 @@ const NAAFIRI_PROJECT = {
   role: "Animation Supervisor",
   skills: "Animation · Rigging · Previz · Lighting · Comp",
   description:
-    "Naafiri is a Character Reveal Trailer for League of Legends at Riot Games. I was the Animation Supervisor on the project — and also handled animation, rigging, previz, lighting, and comp.",
+    "A dark, fast-paced character launch cinematic for League of Legends, focusing on fluid pack mechanics and aggressive character movement.",
   videoUrl: "https://vimeo.com/1054629434",
   thumbUrl:
     "https://i.vimeocdn.com/video/1980056784-a27bdeecda900a6ef6337a63ffe181b7607053c304c21413cd4b32bde8df1115-d_1280x720?region=us",
@@ -34,7 +34,7 @@ const ZAC_BROWN_PROJECT = {
   role: "Concept Visuals",
   skills: "Previz · Edit · Set Design · Animation",
   description:
-    "Zac Brown Band is a Concert Visuals project for The Sphere Las Vegas. My role was Concept Visuals — I also handled previz, edit, set design, and animation.",
+    "Immersive, high-resolution visual experiences and concept pieces designed for the world's most advanced massive-scale wrap-around display.",
   localVideo: "https://pub-d70797a3949642e490ca361605fbb88d.r2.dev/videos/ZacBrown/hard-run.mp4",
   thumbUrl: "assets/ProjectImages/ZacBar.jpg",
   locked: true,
@@ -55,7 +55,7 @@ const OWW_PROJECT = {
   role: "Animation Supervisor",
   skills: "Previz · Animation · Story",
   description:
-    "Overwatch 2 x World of Warcraft Collab is a Collab Trailer for Blizzard Entertainment. I was the Animation Supervisor on the project — and also handled previz, animation, and story.",
+    "A crossover gameplay trailer bringing iconic Warcraft characters into the stylized, high-octane world of Overwatch 2.",
   localVideo: "https://pub-d70797a3949642e490ca361605fbb88d.r2.dev/videos/OWW/overwatch-wow-collab.mp4",
   thumbUrl: "assets/ProjectImages/OWW.png",
 };
@@ -68,7 +68,7 @@ const NETFLIX_PROJECT = {
   role: "Animation Director",
   skills: "Previz · Scene Layout",
   description:
-    "Netflix Logo Activation is a Logo Animation project for Netflix. I was the Animation Director on the project — and also handled previz and scene layout.",
+    "Dynamic brand visual assets and sleek animated sequences designed to elevate and reinforce Netflix's iconic brand identity across global media.",
   localVideo: "https://pub-d70797a3949642e490ca361605fbb88d.r2.dev/videos/NetflixTitles/wednesday-logo-animation.mp4",
   thumbUrl: "assets/ProjectImages/NtflixBar.png",
 };
@@ -81,7 +81,7 @@ const GROGU_PROJECT = {
   role: "Art Director",
   skills: "Animation · Project Lead",
   description:
-    "Ultimate Grogu is a Product Launch project for Hasbro. I was the Art Director on the project — and also handled animation and served as project lead.",
+    "A commercial spot bringing the iconic Star Wars character to life for Hasbro's flagship interactive toy release, blending seamless CG character animation with live-action storytelling.",
   localVideo: "https://pub-d70797a3949642e490ca361605fbb88d.r2.dev/videos/Grogu/ultimate-grogu.mp4",
   thumbUrl: "assets/ProjectImages/GroguBar.png",
   stripOverlay: "linear-gradient(0deg, rgba(74,222,128,0.25), rgba(74,222,128,0.25))",
@@ -96,7 +96,7 @@ const DOD_PROJECT = {
   role: "Art Director / Animation Director",
   skills: "Character Design · Animation · Lighting · Rendering · Comp",
   description:
-    "Día De Los Muertos is a Short Film for We Are Royale. I was the Art Director / Animation Director on the project — and also handled character design, animation, lighting, rendering, and comp.",
+    "A short film inspired by Día de los Muertos, following a lone spirit through a vibrant, handcrafted underworld built to honor the holiday's imagery and traditions.",
   localVideo: "https://pub-d70797a3949642e490ca361605fbb88d.r2.dev/videos/DOD/dia-de-los-muertos.mp4",
   thumbUrl: "assets/ProjectImages/DODBar2.png",
   thumbPosition: "right 12%",
@@ -110,7 +110,7 @@ const HAZARD_PROJECT = {
   role: "Animation Supervisor",
   skills: "Animation · Previz · Storytelling",
   description:
-    "Hazard is a Character Reveal for Overwatch 2 at Blizzard Entertainment. I was the Animation Supervisor on the project — and also handled animation, previz, and storytelling.",
+    "A character reveal trailer introducing Hazard to Overwatch 2, built to sell his brawling, thorn-throwing playstyle in a jolt of cinematic action.",
   videoUrl: "https://www.youtube.com/watch?v=sR8N3cXWxqM",
   thumbUrl: "assets/ProjectImages/HazBar2.png",
   thumbPosition: "center",
@@ -129,7 +129,7 @@ const FALL_GUYS_PROJECT = {
   role: "Art Director",
   skills: "Animation · Story",
   description:
-    "Fall Guys Mobile is a Mobile Unleashed Trailer for Epic Games. I was the Art Director on the project — and also handled animation and story.",
+    "A launch trailer for Fall Guys Mobile, capturing the game's chaotic, colorful energy as the beans tumble their way onto phones.",
   videoUrl: "https://www.youtube.com/watch?v=tjklJKhGs94",
   thumbUrl: "assets/ProjectImages/FGBar.png",
   stripOverlay: "linear-gradient(0deg, rgba(56,189,248,0.50), rgba(56,189,248,0.50))",
@@ -147,7 +147,7 @@ const POKEMON_TCG_PROJECT = {
   role: "Art Director",
   skills: "Animation · Rigging · Modeling · Lighting · Rendering",
   description:
-    "Pokémon Trading Card Game is a Pack Release Advertising campaign for Pokémon. I was the Art Director on the project — and also handled animation, rigging, modeling, lighting, and rendering.",
+    "A series of high-energy 3D spots created for the Pokémon Trading Card Game pack release, built to capture the excitement of tearing open a fresh booster pack.",
   videoUrl: "https://www.youtube.com/watch?v=FGkI41gYj4A&list=PL7702B978C3732EAF&index=90",
   thumbUrl: "assets/ProjectImages/PokeBar.png",
   relatedVideos: [
@@ -177,6 +177,26 @@ const PLACEHOLDER_PROJECT_10 = {
   placeholder: true,
 };
 
+const PLACEHOLDER_PROJECT_11 = {
+  title: "Project Coming Soon",
+  company: "TBD",
+  type: "TBD",
+  role: "TBD",
+  skills: "TBD",
+  description: "Details for this project are coming soon.",
+  placeholder: true,
+};
+
+const PLACEHOLDER_PROJECT_12 = {
+  title: "Project Coming Soon",
+  company: "TBD",
+  type: "TBD",
+  role: "TBD",
+  skills: "TBD",
+  description: "Details for this project are coming soon.",
+  placeholder: true,
+};
+
 const PROJECTS_ORDER = [
   GROGU_PROJECT,
   ZAC_BROWN_PROJECT,
@@ -188,6 +208,8 @@ const PROJECTS_ORDER = [
   NAAFIRI_PROJECT,
   POKEMON_TCG_PROJECT,
   PLACEHOLDER_PROJECT_10,
+  PLACEHOLDER_PROJECT_11,
+  PLACEHOLDER_PROJECT_12,
 ];
 
 // Shuffles finished projects into a different order on every visit; anything
@@ -344,56 +366,6 @@ PROJECTS.forEach((project, i) => {
   workGrid.appendChild(strip);
 });
 
-// ---------- Scroll parallax ----------
-// Each tracked element gets a --parallax-y (or --parallax-content-y /
-// --heading-parallax-y / --tagline-parallax-y) custom property updated every
-// frame based on its distance from viewport center. The CSS transform
-// chains on .hero-media, .hero-content, .hero-heading and .hero-tagline
-// read that variable, so this file only ever writes numbers — the
-// depth/tilt styling itself stays in CSS.
-const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-if (!prefersReducedMotion) {
-  const parallaxHero = document.querySelector(".hero-media");
-  const parallaxHeroContent = document.querySelector(".hero-content");
-  const parallaxHeroHeading = document.querySelector(".hero-heading");
-  const parallaxHeroTagline = document.querySelector(".hero-tagline-inner");
-
-  let parallaxTicking = false;
-  function updateParallax() {
-    const viewportCenter = window.innerHeight / 2;
-
-    if (parallaxHero) {
-      const rect = parallaxHero.getBoundingClientRect();
-      const dist = rect.top + rect.height / 2 - viewportCenter;
-      parallaxHero.style.setProperty("--parallax-y", `${dist * 0.06}px`);
-    }
-    if (parallaxHeroContent) {
-      const rect = parallaxHeroContent.getBoundingClientRect();
-      const dist = rect.top + rect.height / 2 - viewportCenter;
-      parallaxHeroContent.style.setProperty("--parallax-content-y", `${dist * -0.02}px`);
-    }
-    if (parallaxHeroHeading) {
-      const rect = parallaxHeroHeading.getBoundingClientRect();
-      const dist = rect.top + rect.height / 2 - viewportCenter;
-      parallaxHeroHeading.style.setProperty("--heading-parallax-y", `${dist * -0.12}px`);
-    }
-    if (parallaxHeroTagline) {
-      const rect = parallaxHeroTagline.getBoundingClientRect();
-      const dist = rect.top + rect.height / 2 - viewportCenter;
-      parallaxHeroTagline.style.setProperty("--tagline-parallax-y", `${dist * -0.08}px`);
-    }
-    parallaxTicking = false;
-  }
-  function onParallaxScroll() {
-    if (!parallaxTicking) {
-      requestAnimationFrame(updateParallax);
-      parallaxTicking = true;
-    }
-  }
-  window.addEventListener("scroll", onParallaxScroll, { passive: true });
-  window.addEventListener("resize", updateParallax);
-  updateParallax();
-}
 
 // ---------- Lightbox ----------
 const lightbox = document.getElementById("lightbox");
@@ -489,6 +461,11 @@ function openLightbox(project) {
     .join("");
   lightboxCredits.textContent = project.credits || DEFAULT_CREDITS;
 
+  // Solo pieces (like the showreel) have no related clips or credits to show
+  // — drop the sidebar entirely and let the video take the full width instead
+  // of splitting the layout for an empty column.
+  lightboxContent.classList.toggle("lightbox-content--solo", Boolean(project.noSidebar));
+
   lightboxContent.scrollTop = 0;
   lightbox.classList.add("open");
   lightbox.setAttribute("aria-hidden", "false");
@@ -524,7 +501,12 @@ document.addEventListener("keydown", (e) => {
 });
 
 document.getElementById("watchReelBtn").addEventListener("click", () => {
-  openLightbox({ title: "Showreel", videoUrl: HERO_REEL_URL });
+  openLightbox({
+    title: "Showreel",
+    videoUrl: HERO_REEL_URL,
+    description: "A quick cut of animation, direction, and visual storytelling across recent projects.",
+    noSidebar: true,
+  });
 });
 
 // ---------- Password-locked projects ----------
