@@ -8,7 +8,7 @@
 
 /* ---------- Reset & base ---------- */
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 }
@@ -324,13 +324,14 @@ body {
   text-transform: uppercase;
 }
 .hero-title-line { display: block; }
+#heroTitleMain { transform: translateX(3px); }
 .hero-title-accent { color: var(--accent); }
 .hero-title-sub {
-  font-size: clamp(1rem, 3.4vw, 2.85rem);
+  font-size: clamp(1.2rem, 4.1vw, 3.45rem);
   font-weight: 700;
   text-transform: none;
   letter-spacing: -0.01em;
-  margin-top: 0.00010935em;
+  margin-top: -0.22em;
 }
 .hero-tagline {
   margin-top: var(--space-4);
@@ -1381,6 +1382,11 @@ body {
 @media (max-width: 1024px) {
   .credibility-inner { flex-direction: column; align-items: flex-start; gap: var(--space-3); }
   .credibility-stat { border-right: none; padding-right: 0; flex-direction: row; align-items: baseline; gap: 0.6rem; }
+  /* In column direction, align-items:flex-start stops the marquee being
+     stretched to the container width, so it shrinks-to-fit its un-wrapped
+     scrolling track instead — ballooning far past the viewport and causing
+     horizontal scroll. Force it back to full width explicitly. */
+  .marquee { width: 100%; min-width: 0; }
 }
 
 @media (max-width: 768px) {

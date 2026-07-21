@@ -1,5 +1,8 @@
 // ---------------------------------------------------------------------------
 // EDIT YOUR PROJECTS HERE. Each entry becomes one strip in the Work section.
+// title: the project bar's name — keep this short enough to read on one line.
+// videoTitle: optional shorter name (ideally one word) shown as the big
+// overlay title in the video lightbox. Falls back to `title` if omitted.
 // videoUrl: paste a Vimeo or YouTube URL to make the strip playable.
 // localVideo: path to a video file in /assets — takes priority over videoUrl.
 // thumbUrl: a preview image shown as the strip's background (a remote
@@ -25,6 +28,7 @@ const NAAFIRI_PROJECT = {
 
 const ZAC_BROWN_PROJECT = {
   title: "Zac Brown Band",
+  videoTitle: "Zac Brown",
   company: "The Sphere Las Vegas",
   type: "Concert Visuals",
   role: "Concept Visuals",
@@ -44,7 +48,8 @@ const ZAC_BROWN_PROJECT = {
 };
 
 const OWW_PROJECT = {
-  title: "Overwatch 2 x World of Warcraft Collab",
+  title: "Overwatch X WOW",
+  videoTitle: "Overwatch",
   company: "Blizzard Entertainment",
   type: "Collab Trailer",
   role: "Animation Supervisor",
@@ -53,11 +58,11 @@ const OWW_PROJECT = {
     "Overwatch 2 x World of Warcraft Collab is a Collab Trailer for Blizzard Entertainment. I was the Animation Supervisor on the project — and also handled previz, animation, and story.",
   localVideo: "https://pub-d70797a3949642e490ca361605fbb88d.r2.dev/videos/OWW/overwatch-wow-collab.mp4",
   thumbUrl: "assets/ProjectImages/OWW.png",
-  stripLines: ["Overwatch 2", "X", "WOW Collab"],
 };
 
 const NETFLIX_PROJECT = {
-  title: "Netflix Logo Activation",
+  title: "Netflix Logo Intro",
+  videoTitle: "Netflix",
   company: "Netflix",
   type: "Logo Animation",
   role: "Animation Director",
@@ -70,6 +75,7 @@ const NETFLIX_PROJECT = {
 
 const GROGU_PROJECT = {
   title: "Ultimate Grogu",
+  videoTitle: "Grogu",
   company: "Hasbro",
   type: "Product Launch",
   role: "Art Director",
@@ -84,6 +90,7 @@ const GROGU_PROJECT = {
 
 const DOD_PROJECT = {
   title: "Día De Los Muertos",
+  videoTitle: "Muertos",
   company: "We Are Royale",
   type: "Short Film",
   role: "Art Director / Animation Director",
@@ -116,6 +123,7 @@ const HAZARD_PROJECT = {
 
 const FALL_GUYS_PROJECT = {
   title: "Fall Guys Mobile",
+  videoTitle: "Fall Guys",
   company: "Epic Games",
   type: "Mobile Unleashed Trailer",
   role: "Art Director",
@@ -132,7 +140,8 @@ const FALL_GUYS_PROJECT = {
 };
 
 const POKEMON_TCG_PROJECT = {
-  title: "Pokémon Trading Card Game",
+  title: "Pokémon TCG",
+  videoTitle: "Pokémon",
   company: "Pokémon",
   type: "Pack Release Advertising",
   role: "Art Director",
@@ -451,7 +460,7 @@ function openLightbox(project) {
   lastFocused = document.activeElement;
   lightboxVideo.innerHTML = renderMainVideo(getMainSource(project), project.title || "");
   syncLightboxAspectRatio();
-  lightboxTitle.textContent = project.title || "";
+  lightboxTitle.textContent = project.videoTitle || project.title || "";
   lightboxPanel.setAttribute("aria-label", project.title ? `${project.title} video player` : "Video player");
   lightboxDesc.textContent = project.description || "";
   lightboxDesc.style.display = project.description ? "" : "none";
