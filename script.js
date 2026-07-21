@@ -31,15 +31,15 @@ const ZAC_BROWN_PROJECT = {
   skills: "Previz · Edit · Set Design · Animation",
   description:
     "Zac Brown Band is a Concert Visuals project for The Sphere Las Vegas. My role was Concept Visuals — I also handled previz, edit, set design, and animation.",
-  localVideo: "assets/videos/ZacBrown/hard-run.mp4",
+  localVideo: "https://pub-d70797a3949642e490ca361605fbb88d.r2.dev/videos/ZacBrown/hard-run.mp4",
   thumbUrl: "assets/ProjectImages/ZacBar.jpg",
   locked: true,
   credits: "Concept visuals created for Zac Brown Band's live performance at The Sphere, Las Vegas.",
   relatedVideos: [
-    { title: "Give It Away", path: "assets/videos/ZacBrown/give-it-away.mp4" },
-    { title: "Butterfly", path: "assets/videos/ZacBrown/butterfly.mp4" },
-    { title: "Quiet Your Mind", path: "assets/videos/ZacBrown/quiet-your-mind.mp4" },
-    { title: "Chicken Fried", path: "assets/videos/ZacBrown/chicken-fried.mp4" },
+    { title: "Give It Away", path: "https://pub-d70797a3949642e490ca361605fbb88d.r2.dev/videos/ZacBrown/give-it-away.mp4" },
+    { title: "Butterfly", path: "https://pub-d70797a3949642e490ca361605fbb88d.r2.dev/videos/ZacBrown/butterfly.mp4" },
+    { title: "Quiet Your Mind", path: "https://pub-d70797a3949642e490ca361605fbb88d.r2.dev/videos/ZacBrown/quiet-your-mind.mp4" },
+    { title: "Chicken Fried", path: "https://pub-d70797a3949642e490ca361605fbb88d.r2.dev/videos/ZacBrown/chicken-fried.mp4" },
   ],
 };
 
@@ -51,7 +51,7 @@ const OWW_PROJECT = {
   skills: "Previz · Animation · Story",
   description:
     "Overwatch 2 x World of Warcraft Collab is a Collab Trailer for Blizzard Entertainment. I was the Animation Supervisor on the project — and also handled previz, animation, and story.",
-  localVideo: "assets/videos/OWW/overwatch-wow-collab.mp4",
+  localVideo: "https://pub-d70797a3949642e490ca361605fbb88d.r2.dev/videos/OWW/overwatch-wow-collab.mp4",
   thumbUrl: "assets/ProjectImages/OWW.png",
   stripLines: ["Overwatch 2", "X", "WOW Collab"],
 };
@@ -64,7 +64,7 @@ const NETFLIX_PROJECT = {
   skills: "Previz · Scene Layout",
   description:
     "Netflix Logo Activation is a Logo Animation project for Netflix. I was the Animation Director on the project — and also handled previz and scene layout.",
-  localVideo: "assets/videos/NetflixTitles/wednesday-logo-animation.mp4",
+  localVideo: "https://pub-d70797a3949642e490ca361605fbb88d.r2.dev/videos/NetflixTitles/wednesday-logo-animation.mp4",
   thumbUrl: "assets/ProjectImages/NtflixBar.png",
 };
 
@@ -76,7 +76,7 @@ const GROGU_PROJECT = {
   skills: "Animation · Project Lead",
   description:
     "Ultimate Grogu is a Product Launch project for Hasbro. I was the Art Director on the project — and also handled animation and served as project lead.",
-  localVideo: "assets/videos/Grogu/ultimate-grogu.mp4",
+  localVideo: "https://pub-d70797a3949642e490ca361605fbb88d.r2.dev/videos/Grogu/ultimate-grogu.mp4",
   thumbUrl: "assets/ProjectImages/GroguBar.png",
   stripOverlay: "linear-gradient(0deg, rgba(74,222,128,0.25), rgba(74,222,128,0.25))",
   locked: true,
@@ -90,7 +90,7 @@ const DOD_PROJECT = {
   skills: "Character Design · Animation · Lighting · Rendering · Comp",
   description:
     "Día De Los Muertos is a Short Film for We Are Royale. I was the Art Director / Animation Director on the project — and also handled character design, animation, lighting, rendering, and comp.",
-  localVideo: "assets/videos/DOD/dia-de-los-muertos.mp4",
+  localVideo: "https://pub-d70797a3949642e490ca361605fbb88d.r2.dev/videos/DOD/dia-de-los-muertos.mp4",
   thumbUrl: "assets/ProjectImages/DODBar2.png",
   thumbPosition: "right 12%",
   stripOverlay: "linear-gradient(0deg, rgba(212,175,55,0.10), rgba(212,175,55,0.10))",
@@ -109,8 +109,8 @@ const HAZARD_PROJECT = {
   thumbPosition: "center",
   stripOverlay: "linear-gradient(0deg, rgba(236,72,153,0.20), rgba(236,72,153,0.20))",
   relatedVideos: [
-    { title: "Previz", path: "assets/videos/Hazard/previz.mp4" },
-    { title: "Storyboards", path: "assets/videos/Hazard/storyboards.mp4" },
+    { title: "Previz", path: "https://pub-d70797a3949642e490ca361605fbb88d.r2.dev/videos/Hazard/previz.mp4" },
+    { title: "Storyboards", path: "https://pub-d70797a3949642e490ca361605fbb88d.r2.dev/videos/Hazard/storyboards.mp4" },
   ],
 };
 
@@ -126,8 +126,8 @@ const FALL_GUYS_PROJECT = {
   thumbUrl: "assets/ProjectImages/FGBar.png",
   stripOverlay: "linear-gradient(0deg, rgba(56,189,248,0.50), rgba(56,189,248,0.50))",
   relatedVideos: [
-    { title: "Horizontal Preview", path: "assets/videos/FG/FallGuys_Mobile_Teaser_Horizontal_Preview.mp4" },
-    { title: "Teaser", path: "assets/videos/FG/Teaser.mp4" },
+    { title: "Horizontal Preview", path: "https://pub-d70797a3949642e490ca361605fbb88d.r2.dev/videos/FG/FallGuys_Mobile_Teaser_Horizontal_Preview.mp4" },
+    { title: "Teaser", path: "https://pub-d70797a3949642e490ca361605fbb88d.r2.dev/videos/FG/Teaser.mp4" },
   ],
 };
 
