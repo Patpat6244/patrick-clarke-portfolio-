@@ -311,38 +311,47 @@
 <!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox" aria-hidden="true">
   <div class="lightbox-backdrop" data-close></div>
-  <div class="lightbox-content">
+  <!-- .lightbox-frame-outer is a plain, non-clipping wrapper so the close
+       button can overhang the thin-lined box's corner while
+       .lightbox-content itself keeps overflow:auto for scrolling long
+       content — a child positioned outside a scrollable box gets clipped,
+       so the button has to live outside it in the DOM. -->
+  <div class="lightbox-frame-outer">
+    <!-- Positioned to overhang the top-left corner of .lightbox-content (see
+         CSS) — it lives outside the box in the DOM for the same clipping
+         reason as .lightbox-close. -->
+    <div class="lightbox-frame">
+      <span class="lightbox-title" id="lightboxTitle" aria-hidden="true"></span>
+      <div class="lightbox-panel" id="lightboxPanel" role="dialog" aria-modal="true" aria-label="Video player">
+        <div class="lightbox-video" id="lightboxVideo"></div>
+      </div>
+    </div>
     <button class="lightbox-close" id="lightboxClose" aria-label="Close video">
       <span class="close-x" aria-hidden="true">X</span>
     </button>
-    <div class="lightbox-main">
-      <div class="lightbox-frame">
-        <span class="lightbox-title" id="lightboxTitle" aria-hidden="true"></span>
-        <div class="lightbox-panel" id="lightboxPanel" role="dialog" aria-modal="true" aria-label="Video player">
-          <div class="lightbox-video" id="lightboxVideo"></div>
+    <div class="lightbox-content">
+      <div class="lightbox-main">
+        <p class="lightbox-desc" id="lightboxDesc"></p>
+        <div class="lightbox-details" id="lightboxDetails">
+          <div class="lightbox-detail">
+            <span class="lightbox-detail-label">Role</span>
+            <span class="lightbox-detail-value" id="lightboxRole"></span>
+          </div>
+          <div class="lightbox-detail">
+            <span class="lightbox-detail-label">Contributions</span>
+            <span class="lightbox-detail-value" id="lightboxSkills"></span>
+          </div>
         </div>
       </div>
-      <p class="lightbox-desc" id="lightboxDesc"></p>
-      <div class="lightbox-details" id="lightboxDetails">
-        <div class="lightbox-detail">
-          <span class="lightbox-detail-label">Role</span>
-          <span class="lightbox-detail-value" id="lightboxRole"></span>
+      <!-- Sidebar content is rendered per-project by script.js -->
+      <div class="lightbox-sidebar">
+        <div class="lightbox-sidebar-section">
+          <span class="lightbox-detail-label">More From This Project</span>
+          <div class="lightbox-related">
+            <div class="lightbox-related-highlight" id="lightboxRelatedHighlight" aria-hidden="true"></div>
+            <div class="lightbox-related-list" id="lightboxRelated"></div>
+          </div>
         </div>
-        <div class="lightbox-detail">
-          <span class="lightbox-detail-label">Contributions</span>
-          <span class="lightbox-detail-value" id="lightboxSkills"></span>
-        </div>
-      </div>
-    </div>
-    <!-- Sidebar content is rendered per-project by script.js -->
-    <div class="lightbox-sidebar">
-      <div class="lightbox-sidebar-section">
-        <span class="lightbox-detail-label">More From This Project</span>
-        <div class="lightbox-related" id="lightboxRelated"></div>
-      </div>
-      <div class="lightbox-sidebar-section">
-        <span class="lightbox-detail-label">Credits</span>
-        <p class="lightbox-sidebar-text" id="lightboxCredits"></p>
       </div>
     </div>
   </div>

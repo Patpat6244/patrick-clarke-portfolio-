@@ -9,8 +9,6 @@
 // thumbnail URL or a local path both work).
 // relatedVideos: optional [{ title, path }] shown in the lightbox sidebar —
 // clicking one swaps the main player to that clip.
-// credits: optional sidebar credits line. Leave fields empty ("") to fall
-// back to placeholder content.
 // ---------------------------------------------------------------------------
 const NAAFIRI_PROJECT = {
   title: "Naafiri",
@@ -38,7 +36,6 @@ const ZAC_BROWN_PROJECT = {
   localVideo: "https://pub-d70797a3949642e490ca361605fbb88d.r2.dev/videos/ZacBrown/hard-run.mp4",
   thumbUrl: "assets/ProjectImages/ZacBar.jpg",
   locked: true,
-  credits: "Concept visuals created for Zac Brown Band's live performance at The Sphere, Las Vegas.",
   relatedVideos: [
     { title: "Give It Away", path: "https://pub-d70797a3949642e490ca361605fbb88d.r2.dev/videos/ZacBrown/give-it-away.mp4" },
     { title: "Butterfly", path: "https://pub-d70797a3949642e490ca361605fbb88d.r2.dev/videos/ZacBrown/butterfly.mp4" },
@@ -83,8 +80,7 @@ const GROGU_PROJECT = {
   description:
     "A commercial spot bringing the iconic Star Wars character to life for Hasbro's flagship interactive toy release, blending seamless CG character animation with live-action storytelling.",
   localVideo: "https://pub-d70797a3949642e490ca361605fbb88d.r2.dev/videos/Grogu/ultimate-grogu.mp4",
-  thumbUrl: "assets/ProjectImages/GroguBar.png",
-  stripOverlay: "linear-gradient(0deg, rgba(74,222,128,0.25), rgba(74,222,128,0.25))",
+  tint: "linear-gradient(#8a8a8a, #8a8a8a)",
   locked: true,
 };
 
@@ -164,19 +160,29 @@ const POKEMON_TCG_PROJECT = {
   ],
 };
 
+const FF_XIV_PROJECT = {
+  title: "FF XIV: Starter Guide",
+  company: "Square Enix",
+  type: "Animated Walkthrough Videos",
+  role: "Art Director",
+  skills: "Modeling · Design · Rigging",
+  description:
+    "A series of animated walkthrough videos for FINAL FANTASY XIV, guiding new players through the basics of the game one lesson at a time.",
+  videoUrl: "https://www.youtube.com/watch?v=sKR2F6nLKCM",
+  thumbUrl: "assets/ProjectImages/FFBar.png",
+  relatedVideos: [
+    { title: "Episode 1: The Adventure Begins", videoUrl: "https://www.youtube.com/watch?v=XFVlLWjU5C0" },
+    { title: "Episode 2: Meet Your FATE", videoUrl: "https://www.youtube.com/watch?v=mPCteSF9kOM" },
+    { title: "Episode 3: Hall of the Novice", videoUrl: "https://www.youtube.com/watch?v=bRb5kmAsiSU" },
+    { title: "Episode 4: Do Your Duty", videoUrl: "https://www.youtube.com/watch?v=w8lTiD3UnQQ" },
+    { title: "Episode 5: Trial by Fire", videoUrl: "https://www.youtube.com/watch?v=qFXtJfhJvRQ" },
+    { title: "Episode 6: The End of the Beginning", videoUrl: "https://www.youtube.com/watch?v=sKR2F6nLKCM" },
+  ],
+};
+
 // placeholder: true marks a bar as "not finished yet" — it's excluded from
 // the shuffle below and always sinks to the bottom, in the order listed here.
 // Set this on any new project entry until its real details are filled in.
-const PLACEHOLDER_PROJECT_10 = {
-  title: "Project Coming Soon",
-  company: "TBD",
-  type: "TBD",
-  role: "TBD",
-  skills: "TBD",
-  description: "Details for this project are coming soon.",
-  placeholder: true,
-};
-
 const PLACEHOLDER_PROJECT_11 = {
   title: "Project Coming Soon",
   company: "TBD",
@@ -207,7 +213,7 @@ const PROJECTS_ORDER = [
   FALL_GUYS_PROJECT,
   NAAFIRI_PROJECT,
   POKEMON_TCG_PROJECT,
-  PLACEHOLDER_PROJECT_10,
+  FF_XIV_PROJECT,
   PLACEHOLDER_PROJECT_11,
   PLACEHOLDER_PROJECT_12,
 ];
@@ -251,6 +257,15 @@ function toEmbedUrl(url) {
   const ytMatch = url.match(/(?:youtu\.be\/|youtube\.com\/watch\?v=|youtube\.com\/embed\/)([\w-]{11})/);
   if (ytMatch) return `https://www.youtube.com/embed/${ytMatch[1]}?autoplay=1&rel=0&mute=1`;
   return url;
+}
+
+// YouTube serves a predictable thumbnail per video ID with no API key
+// needed — used to give "More From This Project" items a real preview frame
+// instead of a flat color tile.
+function getYouTubeThumb(url) {
+  if (!url) return null;
+  const ytMatch = url.match(/(?:youtu\.be\/|youtube\.com\/watch\?v=|youtube\.com\/embed\/)([\w-]{11})/);
+  return ytMatch ? `https://img.youtube.com/vi/${ytMatch[1]}/mqdefault.jpg` : null;
 }
 
 // ---------- Hero title sub-line scale ----------
@@ -329,7 +344,7 @@ PROJECTS.forEach((project, i) => {
   const strip = document.createElement("button");
   strip.type = "button";
   strip.className = `project-strip ${TILTS[i % TILTS.length]}`;
-  strip.style.setProperty("--project-tint", TINTS[i % TINTS.length]);
+  strip.style.setProperty("--project-tint", project.tint || TINTS[i % TINTS.length]);
   strip.style.setProperty("--project-thumb", project.thumbUrl ? `url("${project.thumbUrl}")` : "none");
   if (project.stripOverlay) strip.style.setProperty("--strip-overlay", project.stripOverlay);
   if (project.thumbPosition) strip.style.setProperty("--project-thumb-position", project.thumbPosition);
@@ -339,7 +354,6 @@ PROJECTS.forEach((project, i) => {
   );
   strip.innerHTML = `
     <span class="strip-content">
-      <span class="strip-index">${String(i + 1).padStart(2, "0")}</span>
       <span class="strip-title">${
         project.stripLines
           ? project.stripLines.map((line) => `<span class="strip-title-line">${line}</span>`).join("")
@@ -350,9 +364,6 @@ PROJECTS.forEach((project, i) => {
         <span class="strip-type">${project.type}</span>
         <span class="strip-role">${project.role}</span>
         <span class="strip-skills">${project.skills}</span>
-      </span>
-      <span class="strip-play" aria-hidden="true">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 2.5v11l10-5.5-10-5.5z" fill="currentColor"/></svg>
       </span>
     </span>
   `;
@@ -376,8 +387,10 @@ const lightboxDetails = document.getElementById("lightboxDetails");
 const lightboxRole = document.getElementById("lightboxRole");
 const lightboxSkills = document.getElementById("lightboxSkills");
 const lightboxRelated = document.getElementById("lightboxRelated");
-const lightboxCredits = document.getElementById("lightboxCredits");
+const lightboxRelatedScroll = lightboxRelated.parentElement;
+const lightboxRelatedHighlight = document.getElementById("lightboxRelatedHighlight");
 const lightboxContent = document.querySelector(".lightbox-content");
+const lightboxFrameOuter = document.querySelector(".lightbox-frame-outer");
 const lightboxClose = document.getElementById("lightboxClose");
 const lightboxPanel = document.getElementById("lightboxPanel");
 let lastFocused = null;
@@ -387,7 +400,33 @@ const DEFAULT_RELATED = [
   { title: "Process Reel", subtitle: "Placeholder · 1:47" },
   { title: "Alt Angle Edit", subtitle: "Placeholder · 0:58" },
 ];
-const DEFAULT_CREDITS = "Placeholder credit line — swap in real production credits, collaborators, and studio partners here.";
+
+// Slides the purple highlight behind whichever related-item button is
+// currently playing. Passing null hides it (nothing in the list matches
+// the main video, e.g. right after opening a project that doesn't repeat
+// its main clip in the sidebar).
+function positionRelatedHighlight(btn) {
+  if (!btn) {
+    lightboxRelatedHighlight.style.opacity = "0";
+    return;
+  }
+  lightboxRelatedHighlight.style.transform = `translateY(${btn.offsetTop}px)`;
+  lightboxRelatedHighlight.style.height = `${btn.offsetHeight}px`;
+  lightboxRelatedHighlight.style.opacity = "1";
+  // The list now scrolls within its own bounded height — nudge just that
+  // inner scroll container (not scrollIntoView, which would also drag the
+  // outer window's own scroll position around) so whichever item is
+  // playing is actually visible instead of hidden below the fold.
+  const itemTop = btn.offsetTop;
+  const itemBottom = itemTop + btn.offsetHeight;
+  const viewTop = lightboxRelatedScroll.scrollTop;
+  const viewBottom = viewTop + lightboxRelatedScroll.clientHeight;
+  if (itemTop < viewTop) {
+    lightboxRelatedScroll.scrollTop = itemTop;
+  } else if (itemBottom > viewBottom) {
+    lightboxRelatedScroll.scrollTop = itemBottom - lightboxRelatedScroll.clientHeight;
+  }
+}
 
 function renderMainVideo(source, title) {
   if (!source) {
@@ -430,7 +469,8 @@ function syncLightboxAspectRatio() {
 
 function openLightbox(project) {
   lastFocused = document.activeElement;
-  lightboxVideo.innerHTML = renderMainVideo(getMainSource(project), project.title || "");
+  const mainSource = getMainSource(project);
+  lightboxVideo.innerHTML = renderMainVideo(mainSource, project.title || "");
   syncLightboxAspectRatio();
   lightboxTitle.textContent = project.videoTitle || project.title || "";
   lightboxPanel.setAttribute("aria-label", project.title ? `${project.title} video player` : "Video player");
@@ -444,6 +484,8 @@ function openLightbox(project) {
   lightboxRelated.innerHTML = related
     .map((item, i) => {
       const tint = TINTS[i % TINTS.length];
+      const thumb = getYouTubeThumb(item.videoUrl);
+      const thumbStyle = thumb ? `background-image:url('${thumb}');background-size:cover;background-position:center;` : `background:${tint};`;
       const attrs = item.path
         ? `data-video="${item.path}" data-title="${item.title}"`
         : item.videoUrl
@@ -451,7 +493,7 @@ function openLightbox(project) {
         : "disabled";
       return `
         <button type="button" class="lightbox-related-item" ${attrs}>
-          <span class="lightbox-related-thumb" style="background:${tint}"></span>
+          <span class="lightbox-related-thumb" style="${thumbStyle}"></span>
           <span class="lightbox-related-info">
             <span class="lightbox-related-title">${item.title}</span>
             ${item.subtitle ? `<span class="lightbox-related-meta">${item.subtitle}</span>` : ""}
@@ -459,18 +501,37 @@ function openLightbox(project) {
         </button>`;
     })
     .join("");
-  lightboxCredits.textContent = project.credits || DEFAULT_CREDITS;
 
-  // Solo pieces (like the showreel) have no related clips or credits to show
-  // — drop the sidebar entirely and let the video take the full width instead
-  // of splitting the layout for an empty column.
+  // Only scroll once there's enough clips to actually need it — 4 or fewer
+  // just sit at their natural height with no cap, no fade, and no scrollbar.
+  lightboxRelatedScroll.classList.toggle("lightbox-related--scrollable", related.length >= 5);
+
+  // If the main video also appears in the related list (e.g. it was added
+  // there so viewers can click back to it after browsing other clips),
+  // highlight it as the initially-playing item.
+  const mainMatchValue = mainSource ? mainSource.value : null;
+  const relatedButtons = [...lightboxRelated.querySelectorAll(".lightbox-related-item")];
+  relatedButtons.forEach((b) => b.classList.remove("is-playing"));
+  const activeRelatedBtn = mainMatchValue
+    ? relatedButtons.find((b) => b.dataset.video === mainMatchValue || b.dataset.embed === mainMatchValue)
+    : null;
+  if (activeRelatedBtn) activeRelatedBtn.classList.add("is-playing");
+
+  // Solo pieces (like the showreel) have no related clips to show — drop
+  // the sidebar entirely and let the video take the full width instead of
+  // splitting the layout for an empty column.
   lightboxContent.classList.toggle("lightbox-content--solo", Boolean(project.noSidebar));
+  lightboxFrameOuter.classList.toggle("lightbox-frame-outer--solo", Boolean(project.noSidebar));
 
   lightboxContent.scrollTop = 0;
   lightbox.classList.add("open");
   lightbox.setAttribute("aria-hidden", "false");
   document.body.style.overflow = "hidden";
   lightboxClose.focus();
+
+  // Only measurable once the lightbox is actually visible — offsetTop reads
+  // 0 for everything while an ancestor is still display:none.
+  positionRelatedHighlight(activeRelatedBtn || null);
 }
 
 lightboxRelated.addEventListener("click", (e) => {
@@ -484,6 +545,15 @@ lightboxRelated.addEventListener("click", (e) => {
   syncLightboxAspectRatio();
   lightboxRelated.querySelectorAll(".lightbox-related-item").forEach((b) => b.classList.remove("is-playing"));
   btn.classList.add("is-playing");
+  positionRelatedHighlight(btn);
+});
+
+// The list can reflow (title wrapping, sidebar width change) on resize while
+// the lightbox is open — keep the highlight glued to whichever item is
+// actually playing rather than a stale pixel position.
+window.addEventListener("resize", () => {
+  if (!lightbox.classList.contains("open")) return;
+  positionRelatedHighlight(lightboxRelated.querySelector(".is-playing"));
 });
 
 function closeLightbox() {
@@ -502,7 +572,7 @@ document.addEventListener("keydown", (e) => {
 
 document.getElementById("watchReelBtn").addEventListener("click", () => {
   openLightbox({
-    title: "Showreel",
+    title: "Demo Reel",
     videoUrl: HERO_REEL_URL,
     description: "A quick cut of animation, direction, and visual storytelling across recent projects.",
     noSidebar: true,
