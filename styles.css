@@ -1522,6 +1522,18 @@ body {
   color: var(--muted);
 }
 @media (max-width: 800px) {
+  /* .lightbox itself has no scroll and vertically centers its child — when
+     the stacked video+box (taller than most phone screens once the video
+     is back in normal flow above the box) overflows, centering pushes the
+     video off the TOP of the viewport with no way to scroll up to it. Let
+     the whole overlay scroll instead, starting from the top so the video
+     is visible immediately. */
+  .lightbox {
+    align-items: flex-start;
+    overflow-y: auto;
+    padding-top: var(--space-4);
+    padding-bottom: var(--space-4);
+  }
   .lightbox-content { grid-template-columns: 1fr; }
   /* The video-overhangs-the-corner treatment relies on fixed pixel offsets
      that only make sense once there's enough spare width beside the box —
