@@ -68,13 +68,17 @@ const NETFLIX_PROJECT = {
     "Dynamic brand visual assets and sleek animated sequences designed to elevate and reinforce Netflix's iconic brand identity across global media.",
   localVideo: "https://pub-d70797a3949642e490ca361605fbb88d.r2.dev/videos/NetflixTitles/wednesday-logo-animation.mp4",
   thumbUrl: "assets/ProjectImages/NtflixBar.png",
+  breakdownVideos: [
+    { title: "Previz 1", path: "https://pub-d70797a3949642e490ca361605fbb88d.r2.dev/videos/NetflixTitles/StrangerThings_Previz.mp4", thumb: "assets/ProjectImages/Netflix_StrangerThings_Previz_thumb.jpg" },
+    { title: "Previz 2", path: "https://pub-d70797a3949642e490ca361605fbb88d.r2.dev/videos/NetflixTitles/StrangerThings_Previz2.mp4", thumb: "assets/ProjectImages/Netflix_StrangerThings_Previz2_thumb.jpg" },
+  ],
 };
 
 const GROGU_PROJECT = {
-  title: "Ultimate Grogu",
+  title: "Comic-Con",
   videoTitle: "Grogu",
-  company: "Hasbro",
-  type: "Product Launch",
+  company: "TBD",
+  type: "TBD",
   role: "Art Director",
   skills: "Animation · Project Lead",
   description:
@@ -82,6 +86,9 @@ const GROGU_PROJECT = {
   localVideo: "https://pub-d70797a3949642e490ca361605fbb88d.r2.dev/videos/Grogu/ultimate-grogu.mp4",
   tint: "linear-gradient(#8a8a8a, #8a8a8a)",
   locked: true,
+  // Permanently locked — the shared PROJECT_PASSWORD is deliberately
+  // rejected for this one project (see the submit handler below).
+  unlockable: false,
 };
 
 const DOD_PROJECT = {
@@ -107,13 +114,16 @@ const HAZARD_PROJECT = {
   skills: "Animation · Previz · Storytelling",
   description:
     "A character reveal trailer introducing Hazard to Overwatch 2, built to sell his brawling, thorn-throwing playstyle in a jolt of cinematic action.",
-  videoUrl: "https://www.youtube.com/watch?v=sR8N3cXWxqM",
+  videoUrl: "https://www.youtube.com/watch?v=sR8N3cXWxqM&t=2s",
   thumbUrl: "assets/ProjectImages/HazBar2.png",
   thumbPosition: "center",
   stripOverlay: "linear-gradient(0deg, rgba(236,72,153,0.20), rgba(236,72,153,0.20))",
   relatedVideos: [
-    { title: "Previz", path: "https://pub-d70797a3949642e490ca361605fbb88d.r2.dev/videos/Hazard/previz.mp4" },
-    { title: "Storyboards", path: "https://pub-d70797a3949642e490ca361605fbb88d.r2.dev/videos/Hazard/storyboards.mp4" },
+    { title: "Hazardous Tactics", videoUrl: "https://www.youtube.com/watch?v=sR8N3cXWxqM&t=2s" },
+  ],
+  breakdownVideos: [
+    { title: "Previz", path: "https://pub-d70797a3949642e490ca361605fbb88d.r2.dev/videos/Hazard/previz.mp4", thumb: "assets/ProjectImages/Hazard_Previz_thumb.jpg" },
+    { title: "Storyboards", path: "https://pub-d70797a3949642e490ca361605fbb88d.r2.dev/videos/Hazard/storyboards.mp4", thumb: "assets/ProjectImages/Hazard_Storyboards_thumb.jpg" },
   ],
 };
 
@@ -147,6 +157,7 @@ const POKEMON_TCG_PROJECT = {
   videoUrl: "https://www.youtube.com/watch?v=FGkI41gYj4A&list=PL7702B978C3732EAF&index=90",
   thumbUrl: "assets/ProjectImages/PokeBar.png",
   relatedVideos: [
+    { title: "Sun & Moon—Burning Shadows", videoUrl: "https://www.youtube.com/watch?v=FGkI41gYj4A&list=PL7702B978C3732EAF&index=90" },
     { title: "XY—Ancient Origins", videoUrl: "https://www.youtube.com/watch?v=IlgKzNzJXw4&list=PL7702B978C3732EAF&index=107" },
     { title: "XY—BREAKthrough", videoUrl: "https://www.youtube.com/watch?v=OtnUvrCttVo&list=PL7702B978C3732EAF&index=106" },
     { title: "XY—BREAKpoint", videoUrl: "https://www.youtube.com/watch?v=7ks-zhWCA_Q&list=PL7702B978C3732EAF&index=105" },
@@ -157,6 +168,9 @@ const POKEMON_TCG_PROJECT = {
     { title: "Sun & Moon", videoUrl: "https://www.youtube.com/watch?v=szGdE-WkfLA&list=PL7702B978C3732EAF&index=94" },
     { title: "Sun & Moon—Crimson Invasion", videoUrl: "https://www.youtube.com/watch?v=6R0W7K9Vq10&list=PL7702B978C3732EAF&index=85" },
     { title: "Sun & Moon—Ultra Prism", videoUrl: "https://www.youtube.com/watch?v=Q62veAZ9P-M&list=PL7702B978C3732EAF&index=82" },
+  ],
+  breakdownVideos: [
+    { title: "XY12 Previz", path: "https://pub-d70797a3949642e490ca361605fbb88d.r2.dev/videos/Pokemon/pokemon_xy12_PREVIZ_A_v18.mov" },
   ],
 };
 
@@ -177,6 +191,9 @@ const FF_XIV_PROJECT = {
     { title: "Episode 4: Do Your Duty", videoUrl: "https://www.youtube.com/watch?v=w8lTiD3UnQQ" },
     { title: "Episode 5: Trial by Fire", videoUrl: "https://www.youtube.com/watch?v=qFXtJfhJvRQ" },
     { title: "Episode 6: The End of the Beginning", videoUrl: "https://www.youtube.com/watch?v=sKR2F6nLKCM" },
+  ],
+  breakdownVideos: [
+    { title: "Previz", path: "https://pub-d70797a3949642e490ca361605fbb88d.r2.dev/videos/FF/FG6_Previz.mp4", thumb: "assets/ProjectImages/FF_Previz.png" },
   ],
 };
 
@@ -250,12 +267,36 @@ const HERO_REEL_URL = "https://player.vimeo.com/video/1126032409?title=0&byline=
 
 // Every video on the site starts muted and lets the viewer opt into sound via
 // the player's own controls, rather than auto-playing audio at them.
+// Reads YouTube's own "t" param (2s, 90, 1m30s, 1h2m3s, ...) off a watch URL
+// and converts it to total seconds, for forwarding to the embed's "start".
+function parseYouTubeStart(url) {
+  const match = url.match(/[?&]t=([0-9hms]+)/i);
+  if (!match) return null;
+  const raw = match[1];
+  if (/^\d+$/.test(raw)) return parseInt(raw, 10);
+  const h = raw.match(/(\d+)h/i);
+  const m = raw.match(/(\d+)m/i);
+  const s = raw.match(/(\d+)s/i);
+  if (!h && !m && !s) return null;
+  return (h ? parseInt(h[1], 10) * 3600 : 0) + (m ? parseInt(m[1], 10) * 60 : 0) + (s ? parseInt(s[1], 10) : 0);
+}
+
 function toEmbedUrl(url) {
   if (!url) return "";
   const vimeoMatch = url.match(/vimeo\.com\/(?:video\/)?(\d+)/);
-  if (vimeoMatch) return `https://player.vimeo.com/video/${vimeoMatch[1]}?title=0&byline=0&portrait=0&autoplay=1&muted=1`;
+  // player_id lets us target this exact iframe when sending the postMessage
+  // handshake below (addEventListener for "finish") — without it Vimeo still
+  // posts messages, but keying off a known id is more robust than matching
+  // "any player.vimeo.com iframe" if more than one ever exists on the page.
+  if (vimeoMatch) return `https://player.vimeo.com/video/${vimeoMatch[1]}?title=0&byline=0&portrait=0&autoplay=1&muted=1&player_id=vimeoPlayer`;
   const ytMatch = url.match(/(?:youtu\.be\/|youtube\.com\/watch\?v=|youtube\.com\/embed\/)([\w-]{11})/);
-  if (ytMatch) return `https://www.youtube.com/embed/${ytMatch[1]}?autoplay=1&rel=0&mute=1`;
+  if (ytMatch) {
+    const start = parseYouTubeStart(url);
+    // enablejsapi=1 is required for the iframe to post onStateChange events
+    // (which is how we detect "video ended" to loop/advance) to the parent
+    // at all — without it, no messages get sent regardless of listening.
+    return `https://www.youtube.com/embed/${ytMatch[1]}?autoplay=1&rel=0&mute=1&enablejsapi=1${start ? `&start=${start}` : ""}`;
+  }
   return url;
 }
 
@@ -389,6 +430,10 @@ const lightboxSkills = document.getElementById("lightboxSkills");
 const lightboxRelated = document.getElementById("lightboxRelated");
 const lightboxRelatedScroll = lightboxRelated.parentElement;
 const lightboxRelatedHighlight = document.getElementById("lightboxRelatedHighlight");
+const lightboxRelatedTabs = document.getElementById("lightboxRelatedTabs");
+let currentProject = null;
+let currentPlayingValue = null;
+let activeRelatedTab = "spots";
 const lightboxContent = document.querySelector(".lightbox-content");
 const lightboxFrameOuter = document.querySelector(".lightbox-frame-outer");
 const lightboxClose = document.getElementById("lightboxClose");
@@ -400,6 +445,98 @@ const DEFAULT_RELATED = [
   { title: "Process Reel", subtitle: "Placeholder · 1:47" },
   { title: "Alt Angle Edit", subtitle: "Placeholder · 0:58" },
 ];
+
+function getSpotsList(project) {
+  return project.relatedVideos && project.relatedVideos.length ? project.relatedVideos : DEFAULT_RELATED;
+}
+function getBreakdownsList(project) {
+  return project.breakdownVideos && project.breakdownVideos.length ? project.breakdownVideos : [];
+}
+
+function buildRelatedItemsHTML(list) {
+  return list
+    .map((item, i) => {
+      const tint = TINTS[i % TINTS.length];
+      const thumb = item.thumb || getYouTubeThumb(item.videoUrl);
+      const thumbStyle = thumb ? `background-image:url('${thumb}');background-size:cover;background-position:center;` : `background:${tint};`;
+      const attrs = item.path
+        ? `data-video="${item.path}" data-title="${item.title}"`
+        : item.videoUrl
+        ? `data-embed="${toEmbedUrl(item.videoUrl)}" data-title="${item.title}"`
+        : "disabled";
+      return `
+        <button type="button" class="lightbox-related-item" ${attrs}>
+          <span class="lightbox-related-thumb" style="${thumbStyle}"></span>
+          <span class="lightbox-related-info">
+            <span class="lightbox-related-title">${item.title}</span>
+            ${item.subtitle ? `<span class="lightbox-related-meta">${item.subtitle}</span>` : ""}
+          </span>
+        </button>`;
+    })
+    .join("");
+}
+
+// Writes `list` into the sidebar and returns whichever button (if any)
+// matches the video currently loaded in the main player, so its highlight
+// can be repositioned once the caller knows the lightbox is visible.
+function applyRelatedList(list) {
+  // Always styled as a scroll window (fixed height, recessed background) —
+  // every project gets both tabs now, so a project with no breakdownVideos
+  // just shows this empty state instead of the tab disappearing.
+  lightboxRelatedScroll.classList.add("lightbox-related--scrollable");
+  if (list.length === 0) {
+    lightboxRelated.innerHTML = `<p class="lightbox-related-empty">Nothing to see here.</p>`;
+    lightboxRelated.classList.remove("lightbox-related-list--reversed");
+    return null;
+  }
+  lightboxRelated.innerHTML = buildRelatedItemsHTML(list);
+  // Break Downs mirrors the row layout (name left, thumbnail right) so it
+  // reads as visually distinct from More Spots rather than an identical
+  // list under a different tab.
+  lightboxRelated.classList.toggle("lightbox-related-list--reversed", activeRelatedTab === "breakdowns");
+  const relatedButtons = [...lightboxRelated.querySelectorAll(".lightbox-related-item")];
+  relatedButtons.forEach((b) => b.classList.remove("is-playing"));
+  const activeBtn = currentPlayingValue
+    ? relatedButtons.find((b) => b.dataset.video === currentPlayingValue || b.dataset.embed === currentPlayingValue)
+    : null;
+  if (activeBtn) activeBtn.classList.add("is-playing");
+  return activeBtn || null;
+}
+
+// Renders whichever tab is currently active. `skipFade` is used on initial
+// open (nothing to cross-fade from yet); switching tabs afterward fades the
+// old list out, swaps its content, then fades the new one in.
+function renderActiveTabList({ skipFade } = {}) {
+  const list = activeRelatedTab === "breakdowns" ? getBreakdownsList(currentProject) : getSpotsList(currentProject);
+  if (skipFade) {
+    const activeBtn = applyRelatedList(list);
+    positionRelatedHighlight(activeBtn);
+    return;
+  }
+  lightboxRelated.classList.add("is-fading");
+  window.setTimeout(() => {
+    const activeBtn = applyRelatedList(list);
+    lightboxRelated.classList.remove("is-fading");
+    positionRelatedHighlight(activeBtn);
+  }, 160);
+}
+
+function setRelatedTab(tab) {
+  if (tab === activeRelatedTab) return;
+  activeRelatedTab = tab;
+  lightboxRelatedTabs.querySelectorAll(".lightbox-related-tab").forEach((btn) => {
+    const isActive = btn.dataset.tab === tab;
+    btn.classList.toggle("is-active", isActive);
+    btn.setAttribute("aria-selected", String(isActive));
+  });
+  renderActiveTabList();
+}
+
+lightboxRelatedTabs.addEventListener("click", (e) => {
+  const btn = e.target.closest(".lightbox-related-tab");
+  if (!btn || btn.classList.contains("is-active")) return;
+  setRelatedTab(btn.dataset.tab);
+});
 
 // Slides the purple highlight behind whichever related-item button is
 // currently playing. Passing null hides it (nothing in the list matches
@@ -440,6 +577,97 @@ function renderMainVideo(source, title) {
   return `<iframe src="${source.value}" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="${title}"></iframe>`;
 }
 
+// Single entry point for putting a video in the main player — used on
+// initial open, on clicking a related item, and when auto-advancing/looping
+// below, so the "ended" listener (local <video>) or postMessage handshake
+// (Vimeo) always gets (re)attached to whatever just got rendered.
+function playMainVideo(source, title) {
+  currentPlayingValue = source ? source.value : null;
+  lightboxVideo.innerHTML = renderMainVideo(source, title);
+  syncLightboxAspectRatio();
+  const video = lightboxVideo.querySelector("video");
+  if (video) video.addEventListener("ended", handleVideoEnded);
+  const iframe = lightboxVideo.querySelector("iframe");
+  if (iframe && iframe.src.includes("player.vimeo.com")) {
+    iframe.addEventListener(
+      "load",
+      () => iframe.contentWindow.postMessage(JSON.stringify({ method: "addEventListener", value: "finish" }), "*"),
+      { once: true }
+    );
+  }
+}
+
+// Plays one item from the currently active related list (mirrors the click
+// handler below) — used when auto-advancing to "the next video" on end.
+function playRelatedItem(item) {
+  const source = item.path
+    ? { isLocal: true, value: item.path }
+    : { isLocal: false, value: toEmbedUrl(item.videoUrl) };
+  playMainVideo(source, item.title);
+  const buttons = [...lightboxRelated.querySelectorAll(".lightbox-related-item")];
+  buttons.forEach((b) => b.classList.remove("is-playing"));
+  const btn = buttons.find((b) => b.dataset.video === source.value || b.dataset.embed === source.value);
+  if (btn) btn.classList.add("is-playing");
+  positionRelatedHighlight(btn || null);
+}
+
+// Restarts whatever's currently playing from 0 — the fallback when there's
+// no "next" video to advance to (a single clip, or the last one in a list).
+function replayCurrentVideo() {
+  const video = lightboxVideo.querySelector("video");
+  if (video) {
+    video.currentTime = 0;
+    video.play();
+    return;
+  }
+  const iframe = lightboxVideo.querySelector("iframe");
+  if (!iframe) return;
+  if (iframe.src.includes("youtube.com")) {
+    iframe.contentWindow.postMessage(JSON.stringify({ event: "command", func: "seekTo", args: [0, true] }), "*");
+    iframe.contentWindow.postMessage(JSON.stringify({ event: "command", func: "playVideo", args: [] }), "*");
+  } else if (iframe.src.includes("player.vimeo.com")) {
+    iframe.contentWindow.postMessage(JSON.stringify({ method: "setCurrentTime", value: 0 }), "*");
+    iframe.contentWindow.postMessage(JSON.stringify({ method: "play" }), "*");
+  }
+}
+
+// Fires whenever a video finishes (local <video> "ended" event, or a
+// YouTube/Vimeo "ended"/"finish" postMessage — see the window "message"
+// listener below). In a project window with 2+ videos in the active tab,
+// advances to the next one (wrapping back to the first after the last); a
+// single clip just loops itself.
+function handleVideoEnded() {
+  if (!currentProject) return;
+  const list = (activeRelatedTab === "breakdowns" ? getBreakdownsList(currentProject) : getSpotsList(currentProject)).filter(
+    (item) => item.path || item.videoUrl
+  );
+  if (list.length > 1) {
+    const currentIndex = list.findIndex((item) => (item.path || toEmbedUrl(item.videoUrl)) === currentPlayingValue);
+    playRelatedItem(list[(currentIndex + 1) % list.length]);
+    return;
+  }
+  replayCurrentVideo();
+}
+
+// YouTube (with enablejsapi=1) posts {event:"onStateChange", info:0} when a
+// video ends; Vimeo posts {event:"finish"} once we've sent the
+// addEventListener handshake in playMainVideo above.
+window.addEventListener("message", (event) => {
+  if (!lightbox.classList.contains("open")) return;
+  let data = event.data;
+  if (typeof data === "string") {
+    try {
+      data = JSON.parse(data);
+    } catch {
+      return;
+    }
+  }
+  if (!data || typeof data !== "object") return;
+  if ((data.event === "onStateChange" && data.info === 0) || data.event === "finish") {
+    handleVideoEnded();
+  }
+});
+
 function getMainSource(project) {
   if (project.localVideo) return { isLocal: true, value: project.localVideo };
   if (project.videoUrl) return { isLocal: false, value: toEmbedUrl(project.videoUrl) };
@@ -467,11 +695,33 @@ function syncLightboxAspectRatio() {
   }
 }
 
+// Vertically centers .lightbox-frame-outer with an explicit margin-top
+// computed once, instead of relying on flex align-items:center (which would
+// re-center — and visibly move the box's top edge — every time its content
+// height changes, e.g. switching between the "More Spots" and "Break Downs"
+// lists). Call this right after opening or on viewport resize; deliberately
+// NOT called on tab-switch so the top stays put and only the bottom grows
+// or shrinks. Skipped on mobile, where the box is meant to start flush with
+// the top of the screen (see the max-width:800px media query).
+function centerLightboxFrame() {
+  if (window.matchMedia("(max-width: 800px)").matches) {
+    lightboxFrameOuter.style.marginTop = "";
+    return;
+  }
+  lightboxFrameOuter.style.marginTop = "0px";
+  const containerStyle = getComputedStyle(lightbox);
+  const paddingTop = parseFloat(containerStyle.paddingTop) || 0;
+  const paddingBottom = parseFloat(containerStyle.paddingBottom) || 0;
+  const availableHeight = lightbox.clientHeight - paddingTop - paddingBottom;
+  const extra = Math.max(0, (availableHeight - lightboxFrameOuter.offsetHeight) / 2);
+  lightboxFrameOuter.style.marginTop = `${extra}px`;
+}
+
 function openLightbox(project) {
   lastFocused = document.activeElement;
+  currentProject = project;
   const mainSource = getMainSource(project);
-  lightboxVideo.innerHTML = renderMainVideo(mainSource, project.title || "");
-  syncLightboxAspectRatio();
+  playMainVideo(mainSource, project.title || "");
   lightboxTitle.textContent = project.videoTitle || project.title || "";
   lightboxPanel.setAttribute("aria-label", project.title ? `${project.title} video player` : "Video player");
   lightboxDesc.textContent = project.description || "";
@@ -480,42 +730,13 @@ function openLightbox(project) {
   lightboxSkills.textContent = project.skills || "";
   lightboxDetails.style.display = project.role || project.skills ? "" : "none";
 
-  const related = project.relatedVideos && project.relatedVideos.length ? project.relatedVideos : DEFAULT_RELATED;
-  lightboxRelated.innerHTML = related
-    .map((item, i) => {
-      const tint = TINTS[i % TINTS.length];
-      const thumb = getYouTubeThumb(item.videoUrl);
-      const thumbStyle = thumb ? `background-image:url('${thumb}');background-size:cover;background-position:center;` : `background:${tint};`;
-      const attrs = item.path
-        ? `data-video="${item.path}" data-title="${item.title}"`
-        : item.videoUrl
-        ? `data-embed="${toEmbedUrl(item.videoUrl)}" data-title="${item.title}"`
-        : "disabled";
-      return `
-        <button type="button" class="lightbox-related-item" ${attrs}>
-          <span class="lightbox-related-thumb" style="${thumbStyle}"></span>
-          <span class="lightbox-related-info">
-            <span class="lightbox-related-title">${item.title}</span>
-            ${item.subtitle ? `<span class="lightbox-related-meta">${item.subtitle}</span>` : ""}
-          </span>
-        </button>`;
-    })
-    .join("");
-
-  // Only scroll once there's enough clips to actually need it — 4 or fewer
-  // just sit at their natural height with no cap, no fade, and no scrollbar.
-  lightboxRelatedScroll.classList.toggle("lightbox-related--scrollable", related.length >= 5);
-
-  // If the main video also appears in the related list (e.g. it was added
-  // there so viewers can click back to it after browsing other clips),
-  // highlight it as the initially-playing item.
-  const mainMatchValue = mainSource ? mainSource.value : null;
-  const relatedButtons = [...lightboxRelated.querySelectorAll(".lightbox-related-item")];
-  relatedButtons.forEach((b) => b.classList.remove("is-playing"));
-  const activeRelatedBtn = mainMatchValue
-    ? relatedButtons.find((b) => b.dataset.video === mainMatchValue || b.dataset.embed === mainMatchValue)
-    : null;
-  if (activeRelatedBtn) activeRelatedBtn.classList.add("is-playing");
+  activeRelatedTab = "spots";
+  lightboxRelatedTabs.querySelectorAll(".lightbox-related-tab").forEach((btn) => {
+    const isActive = btn.dataset.tab === "spots";
+    btn.classList.toggle("is-active", isActive);
+    btn.setAttribute("aria-selected", String(isActive));
+  });
+  const activeRelatedBtn = applyRelatedList(getSpotsList(project));
 
   // Solo pieces (like the showreel) have no related clips to show — drop
   // the sidebar entirely and let the video take the full width instead of
@@ -529,9 +750,16 @@ function openLightbox(project) {
   document.body.style.overflow = "hidden";
   lightboxClose.focus();
 
-  // Only measurable once the lightbox is actually visible — offsetTop reads
-  // 0 for everything while an ancestor is still display:none.
+  // Only measurable/settable once the lightbox is actually visible — while
+  // an ancestor is still display:none, offsetTop reads 0 for everything and
+  // a scrollTop write silently no-ops, so both have to wait until here.
+  // Reset to the top first — the scroll container's position would
+  // otherwise carry over from whatever project was last viewed — then let
+  // positionRelatedHighlight scroll down from that fresh baseline only if
+  // the currently-playing clip actually sits below the fold.
+  lightboxRelatedScroll.scrollTop = 0;
   positionRelatedHighlight(activeRelatedBtn || null);
+  centerLightboxFrame();
 }
 
 lightboxRelated.addEventListener("click", (e) => {
@@ -541,8 +769,7 @@ lightboxRelated.addEventListener("click", (e) => {
   const source = btn.dataset.video
     ? { isLocal: true, value: btn.dataset.video }
     : { isLocal: false, value: btn.dataset.embed };
-  lightboxVideo.innerHTML = renderMainVideo(source, title);
-  syncLightboxAspectRatio();
+  playMainVideo(source, title);
   lightboxRelated.querySelectorAll(".lightbox-related-item").forEach((b) => b.classList.remove("is-playing"));
   btn.classList.add("is-playing");
   positionRelatedHighlight(btn);
@@ -554,6 +781,7 @@ lightboxRelated.addEventListener("click", (e) => {
 window.addEventListener("resize", () => {
   if (!lightbox.classList.contains("open")) return;
   positionRelatedHighlight(lightboxRelated.querySelector(".is-playing"));
+  centerLightboxFrame();
 });
 
 function closeLightbox() {
@@ -628,7 +856,8 @@ function closePasswordGate() {
 
 passwordGateForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  if (passwordGateInput.value === PROJECT_PASSWORD) {
+  const isUnlockable = !pendingUnlockProject || pendingUnlockProject.unlockable !== false;
+  if (isUnlockable && passwordGateInput.value === PROJECT_PASSWORD) {
     const project = pendingUnlockProject;
     unlockedProjects.add(project.title);
     passwordUnlockBtn.disabled = true;

@@ -31,7 +31,7 @@ a { color: inherit; }
   --border-strong: rgba(255, 255, 255, 0.18);
 
   --font-display: 'Troika', 'Archivo', system-ui, sans-serif;
-  --font-body: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Rajdhani', system-ui, sans-serif;
 
   --space-1: 0.5rem;
   --space-2: 1rem;
@@ -52,7 +52,7 @@ body {
   background: var(--bg);
   color: var(--fg);
   font-family: var(--font-body);
-  font-size: 16px;
+  font-size: 15px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
@@ -579,7 +579,32 @@ body {
   font-weight: 500;
   color: var(--muted);
 }
-.marquee-track .dot { color: var(--accent); font-size: 0.7rem; }
+/* A drawn square rather than the bullet glyph itself — the glyph is kept
+   in the markup for non-visual fallback (aria-hidden anyway) but hidden via
+   font-size:0, matching the site's sharp-cornered square-accent language
+   used elsewhere instead of a round dot. */
+.marquee-track .dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  font-size: 0;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+/* Slight per-dot size/rotation variance so the separators don't read as a
+   mechanically repeated stamp. Selectors use :nth-of-type with a period of
+   18 (one full logo+dot set) rather than a flat sequential count, so the
+   duplicated set used for the seamless marquee loop gets the exact same
+   variant at each matching position — the loop point stays invisible. */
+.marquee-track .dot:nth-of-type(18n + 2)  { width: 6px; height: 6px; transform: rotate(4deg); }
+.marquee-track .dot:nth-of-type(18n + 4)  { width: 8px; height: 8px; transform: rotate(-7deg); }
+.marquee-track .dot:nth-of-type(18n + 6)  { width: 5px; height: 5px; transform: rotate(9deg); }
+.marquee-track .dot:nth-of-type(18n + 8)  { width: 9px; height: 9px; transform: rotate(-3deg); }
+.marquee-track .dot:nth-of-type(18n + 10) { width: 7px; height: 7px; transform: rotate(6deg); }
+.marquee-track .dot:nth-of-type(18n + 12) { width: 6px; height: 6px; transform: rotate(-10deg); }
+.marquee-track .dot:nth-of-type(18n + 14) { width: 8px; height: 8px; transform: rotate(2deg); }
+.marquee-track .dot:nth-of-type(18n + 16) { width: 5px; height: 5px; transform: rotate(-5deg); }
+.marquee-track .dot:nth-of-type(18n)      { width: 7px; height: 7px; transform: rotate(8deg); }
 /* Brand marks rendered via CSS mask so every logo — regardless of its own
    fill colors — reads as a single consistent monochrome mark on the bar. */
 .brand-logo {
@@ -600,6 +625,16 @@ body {
   transition: opacity 250ms var(--ease), background-color 250ms var(--ease);
 }
 .brand-logo:hover { opacity: 1; background-color: var(--fg); }
+/* A few marks (Netflix's N, Epic Games, Hasbro) are naturally portrait/
+   near-square icons rather than wide wordmarks — at the standard 32px row
+   height they'd render tiny (mask-size:contain is height-constrained for
+   anything taller than it is wide). Taller box, vertically centered against
+   the row via the marquee's own align-items:center, so these read at a
+   comparable visual size to the wordmark logos beside them. */
+.brand-logo--tall { height: 52px; }
+/* Ubisoft read slightly small next to its neighbors — bumped 10% over the
+   standard 108x32 box. */
+.brand-logo--ubisoft { width: 119px; height: 35px; }
 @keyframes marquee {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
@@ -995,11 +1030,54 @@ body {
   inset: 0;
   z-index: 200;
   display: none;
-  align-items: center;
+  /* flex-start, not center: centering here would re-measure and re-center
+     the box every time its content height changes (e.g. switching between
+     the "More Spots" and "Break Downs" lists, which hold very different
+     item counts) — the whole box would visibly shift as its top edge moved
+     to keep it centered. script.js computes an explicit margin-top once on
+     open instead (see centerLightboxFrame), so the box still looks
+     vertically centered at open time, but later height changes only ever
+     grow/shrink the bottom edge — the top stays put. */
+  align-items: flex-start;
   justify-content: center;
   padding: var(--space-4);
 }
 .lightbox.open { display: flex; }
+/* Staggered pop-in on open: the project window now starts first (frame 1,
+   10-frame animation), video+title second (frame 5, 8-frame animation) —
+   the two swapped places from the original order. The exit button starts
+   5 frames sooner than before, still with its own extra half-second hold
+   layered on top. All timings @60fps (~16.7ms/frame). Each piece overshoots
+   past full size before settling, via a "back" easing curve on a plain
+   0.75->1 scale rather than extra keyframe steps. Each keyframe re-declares
+   that element's own persistent tilt transform (frame has none, content
+   keeps its rotateY, close keeps its rotate) so the bounce doesn't strip
+   it. */
+@keyframes lightbox-pop-frame {
+  0% { opacity: 0; transform: scale(0.75); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes lightbox-pop-content {
+  0% { opacity: 0; transform: perspective(1800px) rotateY(18deg) scale(0.75); }
+  100% { opacity: 1; transform: perspective(1800px) rotateY(18deg) scale(1); }
+}
+@keyframes lightbox-pop-close {
+  0% { opacity: 0; transform: rotate(10deg) scale(0.5); }
+  100% { opacity: 1; transform: rotate(10deg) scale(1); }
+}
+.lightbox.open .lightbox-frame {
+  animation: lightbox-pop-frame 133ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation-delay: 83ms;
+}
+.lightbox.open .lightbox-content {
+  animation: lightbox-pop-content 167ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+.lightbox.open .lightbox-close {
+  animation: lightbox-pop-close 83ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  /* Frame-8 start (133ms) minus 5 frames (~83ms) sooner, plus the extra
+     half-second hold from before. */
+  animation-delay: 550ms;
+}
 .lightbox-backdrop {
   position: absolute;
   inset: 0;
@@ -1059,11 +1137,40 @@ body {
   grid-template-columns: 1fr;
 }
 .lightbox-content--solo .lightbox-sidebar { display: none; }
+/* .lightbox-related-tabs now lives outside .lightbox-content (a sibling in
+   .lightbox-frame-outer, so it can overlap the card's edge — see its own
+   rule below), so hiding .lightbox-sidebar alone no longer hides it for
+   solo pieces like the demo reel. Hide it explicitly here instead. */
+.lightbox-frame-outer--solo .lightbox-related-tabs { display: none; }
 /* Matches .lightbox-content--solo's width + the shared 10px margin-left, so
    this non-clipping wrapper is sized to actually fit the wider solo box
    (see the comment on the base .lightbox-frame-outer rule above). */
 .lightbox-frame-outer--solo {
   width: calc(min(880px, 70vw) + 10px);
+}
+/* A solid-purple duplicate of .lightbox-content's own shape, sitting behind
+   it and nudged down-right — a flat graphical drop shadow rather than a
+   soft blurred one, matching the site's hard-edged "paper cutout" language.
+   .lightbox-content is the only normal-flow child here (.lightbox-frame and
+   .lightbox-close are both position:absolute), so this pseudo-element's
+   height:100% tracks its actual rendered height automatically, including
+   solo pieces and content of any length. Same width/margin/tilt formula as
+   .lightbox-content so the duplicate is a true match, not just a rough box. */
+.lightbox-frame-outer::before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: min(760px, 66vw);
+  height: 100%;
+  background: var(--accent);
+  transform: perspective(1800px) rotateY(18deg) translate(44px, 39px) scale(0.9215);
+  transform-origin: center;
+  z-index: 0;
+  pointer-events: none;
+}
+.lightbox-frame-outer--solo::before {
+  width: min(880px, 70vw);
 }
 .lightbox-main {
   display: flex;
@@ -1165,6 +1272,9 @@ body {
   .lightbox-title { transform: translateY(-56%); }
   .lightbox-desc,
   .lightbox-details { transform: none; }
+  .lightbox-frame,
+  .lightbox-content,
+  .lightbox-close { animation: none; }
 }
 .lightbox-detail-label {
   display: block;
@@ -1186,6 +1296,23 @@ body {
   font-weight: 800;
   font-size: 1.15rem;
   line-height: 1;
+}
+/* Both the lightbox's exit button and the password gate's close button
+   (the locked-project prompt) now share this same icon — Exit_X_2.png is
+   already grey in the source file itself, so this just places it directly
+   as a background image rather than recoloring a mask via
+   currentColor/--bg, which wasn't showing up. Sized 2x the original 20px
+   glyph. */
+.lightbox-close .close-x,
+.password-gate-close .close-x {
+  font-size: 0;
+  display: block;
+  width: 40px;
+  height: 40px;
+  background-image: url('assets/ProjectImages/Exit_X_2.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
 }
 .lightbox-close {
   position: absolute;
@@ -1404,53 +1531,160 @@ body {
 .lightbox-sidebar-section {
   padding-bottom: var(--space-3);
   border-bottom: 1px solid var(--border);
+  /* Reserves the vertical space the tabs used to occupy in normal flow,
+     now that they're an absolutely-positioned sibling living outside
+     .lightbox-content (see below) — without this the related-list would
+     ride up to fill the gap left behind. */
+  padding-top: 58px;
 }
 .lightbox-sidebar-section:last-child { border-bottom: none; padding-bottom: 0; }
+/* Lives outside .lightbox-content now (see index.html), positioned against
+   .lightbox-frame-outer instead — that box has no overflow clipping, so
+   the tabs can genuinely overlap .lightbox-content's own right edge rather
+   than just sitting flush against it. top: mirrors the exact stack that
+   used to place them in flow (content's own margin-top + padding-top,
+   then the sidebar's margin-top). Carries the same perspective/rotateY as
+   .lightbox-content so it reads as sitting on that same tilted plane
+   rather than floating flat in front of it. */
+.lightbox-related-tabs {
+  position: absolute;
+  top: calc(10px + clamp(1.25rem, 3vw, 2.25rem) + 280px);
+  right: -20px;
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  transform: perspective(1800px) rotateY(18deg);
+  transform-origin: center;
+  z-index: 3;
+}
+/* Same solid-vs-hollow button language as .btn-primary/.btn-ghost up in the
+   hero — the active tab reads as a pressed-in solid purple button, the
+   inactive one as its outlined counterpart, so the pair is legible as
+   buttons rather than plain text labels. Each tilts a fixed ~10deg, opposite
+   directions, matching the site's rotated-button/card language elsewhere
+   (project strips, hero CTAs) instead of sitting perfectly level. */
+.lightbox-related-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-strong);
+  border-radius: 0;
+  padding: 0.7rem 1.3rem;
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--muted);
+  cursor: pointer;
+  transition: background-color 200ms var(--ease), color 200ms var(--ease), border-color 200ms var(--ease), transform 200ms var(--ease);
+}
+.lightbox-related-tab[data-tab="spots"] { transform: rotate(-2deg) scale(1); }
+.lightbox-related-tab[data-tab="breakdowns"] { transform: rotate(3deg) scale(1); }
+.lightbox-related-tab:hover:not(.is-active) { border-color: var(--accent); color: var(--accent); }
+.lightbox-related-tab.is-active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-fg);
+  cursor: default;
+}
+/* Selected tab reads 10% larger; it shrinks back the instant it's
+   deselected, rather than staying big until the other tab is clicked. */
+.lightbox-related-tab[data-tab="spots"].is-active { transform: rotate(-2deg) scale(1.1); }
+.lightbox-related-tab[data-tab="breakdowns"].is-active { transform: rotate(3deg) scale(1.1); }
 .lightbox-related {
   position: relative;
   margin-top: var(--space-3);
 }
-/* Only applied when there are 5+ clips (see script.js) — with 4 or fewer,
-   the list just sits at its natural height with no cap, fade, border, or
-   scrollbar at all. */
+/* The native scrollbar track is clipped to the scroll well's own box, so it
+   can't actually run taller than it — these two caps fake the overlap by
+   extending the track's own look (same width/background/border) 5px past
+   the well's top and bottom edges, so the whole assembly reads as bigger
+   than the window it sits in rather than flush with it. */
+.lightbox-related::before,
+.lightbox-related::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  width: 48px;
+  height: 5px;
+  background: var(--bg-elevated);
+  border: 1px solid rgba(167,139,250,0.35);
+  pointer-events: none;
+}
+.lightbox-related::before { top: -5px; border-bottom: none; }
+.lightbox-related::after { bottom: -5px; border-top: none; }
+/* Always applied (see script.js) — every project's scroll well is the same
+   fixed height regardless of how many clips it holds, so the project
+   window never grows or shrinks tab-to-tab or project-to-project. A short
+   list just leaves blank space below it instead of shrinking the box; a
+   long one scrolls within it. */
 .lightbox-related--scrollable {
-  /* Bounded height with its own scroll — this wrapper (not just the list)
-     is the scroll container so the sliding highlight (a sibling of the
-     list, both children of this element) scrolls in lockstep with the
-     buttons instead of staying put while they move underneath it. Shorter
-     than before so this column doesn't force the whole box taller than
-     the description/role/contributions column, leaving dead space under
-     it — a visible scrollbar (below) does the "more to scroll" signaling
-     instead of a tall list. */
-  max-height: 230px;
+  /* Fixed height, not max-height — this wrapper (not just the list) is the
+     scroll container so the sliding highlight (a sibling of the list, both
+     children of this element) scrolls in lockstep with the buttons instead
+     of staying put while they move underneath it. */
+  height: 230px;
   overflow-y: auto;
   overflow-x: hidden;
-  padding-right: 1.75rem;
-  /* Thin lines marking the scroll boundary — a visual cue that items are
-     passing behind an edge. No fade here: a cut-off item is clipped clean,
+  /* Darker recessed well, not a hard-edged border — an inset shadow instead
+     reads as the box being a smaller sunken window, its shadow falling
+     across the thumbnails right at the edge rather than a drawn line. No
+     fade at the scroll edges themselves: a cut-off item is clipped clean,
      not softened into transparency. */
-  border-top: 1px solid rgba(167,139,250,0.5);
-  border-bottom: 1px solid rgba(167,139,250,0.5);
-  /* Visible, rectangular purple scrollbar instead of a hidden one — a
-     clearer cue that this list scrolls independently from the rest of the
-     window. Extra-wide to be easy to grab, and square-edged (no
-     border-radius) to match the site's sharp-cornered "paper cutout"
-     style rather than the OS's default pill-shaped thumb. */
-  scrollbar-width: auto;
-  scrollbar-color: rgba(167,139,250,0.7) transparent;
+  background: var(--bg);
+  box-shadow: inset 0 0 14px rgba(0,0,0,0.55);
+  /* Right padding widened to clear the scrollbar's new 48px width (was
+     1.75rem for the old 24px one). */
+  padding: 0.5rem 3.25rem 0.5rem 0.75rem;
 }
-.lightbox-related--scrollable::-webkit-scrollbar { width: 24px; }
+/* Visible, rectangular purple scrollbar instead of a hidden one — a
+   clearer cue that this list scrolls independently from the rest of the
+   window. Extra-wide (48px, 2x the original) to be easy to grab, and
+   square-edged (no border-radius) to match the site's sharp-cornered
+   "paper cutout" style rather than the OS's default pill-shaped thumb.
+   Deliberately relies on the legacy ::-webkit-scrollbar-* pseudo-elements
+   only, with no scrollbar-color/scrollbar-width declared — Chrome's newer
+   standardized scrollbar-color styling takes priority over these
+   pseudo-elements when both are present, which is what was silently
+   rounding the corners despite border-radius:0 below. Firefox (which
+   doesn't support ::-webkit-scrollbar at all) falls back to its own
+   native scrollbar instead of a colored one — an acceptable tradeoff for
+   guaranteed sharp corners in Chrome/Safari/Edge. */
+.lightbox-related--scrollable::-webkit-scrollbar { width: 48px; }
+/* The track gives the thumb a visible "home" to sit in — same darker grey
+   as the scroll window's own interior, with a thin purple outline like
+   .lightbox-content's border, so it reads as a rail the user can see and
+   grab rather than floating in empty space. Narrower than the 48px
+   thumb/gutter (half-width, 24px), flush with the gutter's right edge (no
+   transparent spacing on that side, so there's no gap against the scroll
+   section's own right edge) — all the shrink-space sits on the left, where
+   the thumb then visibly overhangs. background-clip keeps the fill from
+   painting underneath that left spacing, and the inset box-shadow draws
+   the outline around the narrower box that results. */
 .lightbox-related--scrollable::-webkit-scrollbar-track {
-  background: transparent;
+  background-color: var(--bg);
+  background-clip: padding-box;
+  border-left: 24px solid transparent;
+  box-shadow: inset 0 0 0 1px rgba(167,139,250,0.35);
   border-radius: 0;
 }
+/* Inset from the left the same amount as the track's own left spacing, so
+   the thumb's visible width matches and sits flush within the track
+   (rather than overhanging it) without touching the track's own scale —
+   the scrollbar's actual gutter (48px) is untouched, only the thumb's
+   visible fill is narrowed via the same border+background-clip trick used
+   on the track. */
 .lightbox-related--scrollable::-webkit-scrollbar-thumb {
-  background: rgba(167,139,250,0.7);
+  background-color: rgba(167,139,250,0.7);
+  background-clip: padding-box;
+  border-left: 24px solid transparent;
   border-radius: 0;
-  border: none;
   box-shadow: none;
 }
-.lightbox-related--scrollable::-webkit-scrollbar-thumb:hover { background: rgba(167,139,250,0.9); }
+.lightbox-related--scrollable::-webkit-scrollbar-thumb:hover { background-color: rgba(167,139,250,0.9); }
 /* Sliding purple indicator behind whichever related item is currently
    playing — repositioned via JS (see positionRelatedHighlight in script.js)
    whenever the main video changes, so it glides to the new selection
@@ -1478,6 +1712,21 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  transition: opacity 160ms var(--ease);
+}
+/* Toggled briefly by script.js while swapping between the "More Spots" and
+   "Break Downs" tabs, so the old set visibly disappears before the new one
+   is written in, instead of an instant swap. */
+.lightbox-related-list.is-fading { opacity: 0; }
+/* Shown in place of the list when a project has no Break Downs content —
+   centered in the fixed-height scroll well (see script.js: margin:auto on a
+   flex column child centers both axes) rather than sitting at the top. */
+.lightbox-related-empty {
+  margin: auto;
+  padding: 1rem;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
 }
 .lightbox-related-item {
   position: relative;
@@ -1495,6 +1744,10 @@ body {
   transition: background 200ms var(--ease);
 }
 .lightbox-related-item:hover:not(:disabled) { background: rgba(255,255,255,0.06); }
+/* Break Downs mirrors the row: name on the left, thumbnail on the right —
+   set via script.js toggling this class on the list based on the active
+   tab, rather than reordering the markup itself. */
+.lightbox-related-list--reversed .lightbox-related-item { flex-direction: row-reverse; }
 .lightbox-related-item:disabled { cursor: default; opacity: 0.55; }
 .lightbox-related-item.is-playing .lightbox-related-title { color: var(--accent); }
 .lightbox-related-thumb {
